@@ -1,0 +1,27 @@
+{
+  "name": "bamazon-indulgences",
+  "version": "1.0.0",
+  "description": "packaging sql",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PocketThi3f/bamazon-indulgences.git"
+  },
+  "keywords": [
+    "sql_push"
+  ],
+  "author": "Kris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PocketThi3f/bamazon-indulgences/issues"
+  },
+  "homepage": "https://github.com/PocketThi3f/bamazon-indulgences#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "inquirer": "^2.0.0",
+    "mysql": "^2.12.0"
+  }
+}
