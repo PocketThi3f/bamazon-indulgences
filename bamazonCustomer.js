@@ -1,7 +1,9 @@
+// Global Variables for npm packages installed
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var Table = require("cli-table");
 
+// This var allows for connection to the mysql workbench via mysql npm package
 var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
@@ -19,52 +21,72 @@ connection.connect(function(err) {
   startUp();
 });
 
+// This brings up the required variable of CLI-Table npm package
+var table = new Table({
+  chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
+         , 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
+         , 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
+         , 'right': '║' , 'right-mid': '╢' , 'middle': '│' },
+
+  head: ['ID', 'Product Name', 'Cattygory', 'Pryce', 'Stock Quankitty']       
+});
 
 var startUp = function() {
-  var query = 'SELECT * FROM products'
-  connection.query(query, function(err, res) {
-    if (err) {
-      console.log('Oops, something went wrong! Take another look.');
-    }
-    console.log('Du you want any powerups frum Temmie?');
-    console.log('\nID | Product Name | Cattygory | Pryce | Stock Quankitty');
-    splurgeMunny();
-  })
-}
+  var query = 'SELECT * FROM products';
+      connection.query(query, function(err, body) {
+        if (err) {
+          console.log('Oops, something went wrong! Take another look.');
+        }
+          console.log('Welcome to duh Tem Shop!');
+            for (var i = 0; i < body.length; i++) {
+              table.push(
+                [body[i].item_id, body[i].product_name, body[i].department_name, body[i].price, body[i].stock_quantity]
+              )};
+              console.log(table.toString());
+
+              welcomeIn();
+      });
+}      
 
 
-var splurgeMunny = function() {
-  inquirer.prompt({
-    name: "action",
-    type: "rawlist",
-    message: "HI! I'm Temmie :3. Welcome To The Temmie Shop! What would you like to du?",
-    choices: [
-      "Give Temmie Money For An Item To Fund Fer Collage"
-    ]
-  }).then(function(answer) {
-    switch (answer) {
-      case "Give Temmie Money For An Item To Fund Fer Collage":
-        productSearch();
-        break;
+function welcomeIn() {
+  inquirer.prompt([
+    {
+      name: "action",
+      type: "rawlist",
+      message: "HI! I'm Temmie :3. Welcome To Temmie\'s Shop! What would you like to du?",
+      choices: ["Buy En Itum Frum Temmie!", "Leave Shop"]
     }
-  });
+  ]).then(function(answer) {
+      if (answer === "Buy En Itum Frum Temmie!") {
+        console.log('Sounds Guud!');
+        itemPurchase();
+      }
+      else if (answer === "Leave Shop") {
+        console.log('See You Agin Soon! ^3^/');
+        connection.end();
+      }
+    })
 };
 
-var productSearch = function() {
-  inquirer.prompt({
-    name: "product",
-    type: "input",
-    message: "How many would you like to take from Temmie?"
-  }).then(function(answer) {
-    var query = "SELECT * FROM Bamazon WHERE ?";
-    connection.query(query, { id: item_id }, function(err, res) {
-      for (var i = 0; i < res.length; i++) {
-        console.log("Item ID: " + res[i].item_id + " || Product Name: " + res[i].product_name + " || Category: " + res[i].department_name);
-        console.log("Yey! Temmie is thankful, but wheel miss those itums. :\'[");
-      }
-      runSearch();
+
+function itemPurchase() {
+  inquirer.prompt([
+    {
+      name: "product",
+      type: "input",
+      message: "How many would you like to take from Temmie?"
+    }
+  ]).then(function(answer) {
+      var query = "UPDATE products SET ? WHERE ?";
+        connection.query(query, { id: item_id }, function(err, res) {
+            for (var i = 0; i < res.length; i++) {
+              console.log("ID: " + res[i].item_id + " || Product Name: " + res[i].product_name + " || Cattygory: " + res[i].department_name + " || Pryce: " + res[i].price + " || Stock Quankitty: " +res[i].stock_quantity);
+              console.log("Yey! Temmie is thankful, but wheel miss those itums. :\'[");
+            }
+            runSearch();
+        });
     });
-  });
 };
 
 // Do not forget to install npm inquirer AND npm mysql~!!!
