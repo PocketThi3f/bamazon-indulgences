@@ -106,7 +106,7 @@ var itemPurchase = function() {
 
         // process the order and print receipt
         var orderTotal = processOrder(price, res.quantity);
-        console.log(`Order completed! Your card was charged $${orderTotal}`);
+        console.log(`Order completed! You were charged $${orderTotal}`);
 
         // new stock quantity after purchase
         var quantityNew = stockQuantity - res.quantity;
@@ -118,7 +118,7 @@ var itemPurchase = function() {
 
       } else if (res.quantity > stockQuantity) {
         // error case: if units are greater than available units
-        console.log('We don\'t have that many units in stock.');
+        console.log('Stock is probably out! (\o3o/)');
 
         next();
       }
