@@ -104,14 +104,14 @@ var itemPurchase = function() {
       if(res.quantity <= stockQuantity) {
         // success case: if units are less than or equal to available units
 
-        // process the order and print receipt
+        // this is where we use the order function to charge after unit is counted
         var orderTotal = processOrder(price, res.quantity);
         console.log(`Order completed! You were charged $${orderTotal}`);
 
-        // new stock quantity after purchase
+        // quantity goes down after 
         var quantityNew = stockQuantity - res.quantity;
 
-        // update quantity in database
+        // update quantity in mysql database
         updateStock(res.item_id, quantityNew);
 
         next();
