@@ -16,4 +16,4 @@ JavaScript/Promises
 1. In order to start this application properly, after cloning please have Node.js installed (https://nodejs.org/en/) and then type into the console: **npm install**
 
 2. Use the command 
-   * **node** server
+   * **node** bamazonCustomer.js
