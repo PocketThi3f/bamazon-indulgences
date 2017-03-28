@@ -10,7 +10,7 @@ Executive: Have an idea how to calculate products that have been currently bough
 Node.js,
 Inquirer package from npmjs.io (main component),
 mySQL,
-Javascript/Promises,
+JavaScript/Promises,
 HTML5/CSS3
 
 # Required:
